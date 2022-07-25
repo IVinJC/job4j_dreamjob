@@ -9,7 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PostStore {
     private static final PostStore INST = new PostStore();
-
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
 
     private PostStore() {
@@ -28,5 +27,13 @@ public class PostStore {
 
     public boolean add(Post post) {
         return posts.put(post.getId(), post) == null;
+    }
+
+    public Post findById(int id) {
+        return posts.get(id);
+    }
+
+    public Post update(Post post) {
+       return posts.replace(post.getId(), post);
     }
 }
