@@ -1,4 +1,4 @@
-package ru.job4j.dream.control;
+package ru.job4j.dreamjob.control;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
