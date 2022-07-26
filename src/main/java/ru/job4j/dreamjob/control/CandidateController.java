@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.store.CandidateStore;
 
+import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Controller
 public class CandidateController {
     private final CandidateStore store = CandidateStore.instOf();
+    private final AtomicInteger id = new AtomicInteger(4);
 
     @GetMapping("/candidates")
     public String candidates(Model model) {
@@ -27,12 +31,15 @@ public class CandidateController {
 
     @PostMapping("/createCandidate")
     public String createCandidate(@ModelAttribute Candidate candidate) {
+        candidate.setId(id.getAndIncrement());
+        candidate.setCreated(LocalDateTime.now());
         store.add(candidate);
         return "redirect:/candidates";
     }
 
     @PostMapping("/updateCandidate")
     public String updateCandidate(@ModelAttribute Candidate candidate) {
+        candidate.setCreated(LocalDateTime.now());
         store.update(candidate);
         return "redirect:/candidates";
     }
@@ -40,6 +47,6 @@ public class CandidateController {
     @GetMapping("/formUpdateCandidate/{candidateId}")
     public String formUpdateCandidate(Model model, @PathVariable("candidateId") int id) {
         model.addAttribute("candidate", store.findById(id));
-        return "updateCandidate.html";
+        return "updateCandidate";
     }
 }

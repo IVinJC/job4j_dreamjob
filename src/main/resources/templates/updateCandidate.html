@@ -30,10 +30,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" href="#">Главная</a>
+                <a class="nav-item nav-link active" href="#">Главная <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
-                <a class="nav-item nav-link active" th:href="@{/addPost}">Добавить вакансию</a>
                 <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
+                <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
+                <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
             </div>
         </div>
     </nav>
@@ -43,11 +44,15 @@
                 Редатирование кандидатов.
             </div>
             <div class="card-body">
-                <form th:action="@{/updateCandidate}" method="CANDIDATE" th:object="${candidate}">
+                <form th:action="@{/updateCandidate}" method="POST" th:object="${candidate}">
                     <input type="hidden" name="id" th:field="*{id}"/>
                     <div class="form-group">
-                        <label for="name">Имя</label>
+                        <label for="name">Имя кандидата</label>
                         <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Описание кандидата</label>
+                        <input type="text" class="form-control" name="description" id="description" th:field="*{description}">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

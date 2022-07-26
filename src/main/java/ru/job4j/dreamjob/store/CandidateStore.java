@@ -11,6 +11,7 @@ public class CandidateStore {
 
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
 
+
     private CandidateStore() {
         candidates.put(1, new Candidate(1, "Александр", "Кандидат Junior java developer", LocalDateTime.now()));
         candidates.put(2, new Candidate(2, "Виталий", "Кандидат Middle java developer", LocalDateTime.now()));
