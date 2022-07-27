@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.persistence.PostStore;
 import java.time.LocalDateTime;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
 public class PostController {
 
     private final PostStore store = PostStore.instOf();
-    private final AtomicInteger id = new AtomicInteger(4);
 
     @GetMapping("/posts")
     public String posts(Model model) {
@@ -43,7 +41,6 @@ public class PostController {
     @ModelAttribute сообщаем Spring, чтобы тот собрал объект Post из параметров запроса.*/
     @PostMapping("/createPost")
     public String createPost(@ModelAttribute Post post) {
-        post.setId(id.getAndIncrement());
         post.setCreated(LocalDateTime.now());
         store.add(post);
         return "redirect:/posts";
