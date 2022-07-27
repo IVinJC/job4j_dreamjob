@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 
 @Controller
 public class PostController {
-
     private final PostStore store = PostStore.instOf();
 
     @GetMapping("/posts")
