@@ -23,7 +23,7 @@
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Dream Job, <small th:text="${user}"></small></a>
+        <a class="navbar-brand" href="#">Dream Job, <small th:text="${city}"></small></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,26 +33,24 @@
                 <a class="nav-item nav-link active" href="#">Главная <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
                 <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
+                <a class="nav-item nav-link" th:href="@{/cities}">Города</a>
                 <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
                 <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
+                <a class="nav-item nav-link" th:href="@{/formAddCity}">Добавить города</a>
             </div>
         </div>
     </nav>
     <div class="row pt-3">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Редактирование кандидатов.
+                Редактирование населенного пункта
             </div>
             <div class="card-body">
-                <form th:action="@{/updateCandidate}" method="POST" th:object="${candidate}">
+                <form th:action="@{/updateCity}" method="POST" th:object="${city}">
                     <input type="hidden" name="id" th:field="*{id}"/>
                     <div class="form-group">
-                        <label for="name">Имя кандидата</label>
+                        <label for="name">Имя населенного пункта</label>
                         <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Описание кандидата</label>
-                        <input type="text" class="form-control" name="description" id="description" th:field="*{description}">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

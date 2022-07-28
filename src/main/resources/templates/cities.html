@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!doctype html>
+<html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -18,12 +19,12 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
 
-    <title>Работа мечты</title>
+    <title>Работа мечты!</title>
 </head>
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Dream Job, <small th:text="${user}"></small></a>
+        <a class="navbar-brand" href="#">Работа мечты</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,31 +34,33 @@
                 <a class="nav-item nav-link active" href="#">Главная <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
                 <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
+                <a class="nav-item nav-link" th:href="@{/cities}">Города</a>
                 <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
                 <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
+                <a class="nav-item nav-link" th:href="@{/formAddCity}">Добавить города</a>
             </div>
         </div>
     </nav>
-    <div class="row pt-3">
-        <div class="card" style="width: 100%">
-            <div class="card-header">
-                Редактирование кандидатов.
-            </div>
-            <div class="card-body">
-                <form th:action="@{/updateCandidate}" method="POST" th:object="${candidate}">
-                    <input type="hidden" name="id" th:field="*{id}"/>
-                    <div class="form-group">
-                        <label for="name">Имя кандидата</label>
-                        <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Описание кандидата</label>
-                        <input type="text" class="form-control" name="description" id="description" th:field="*{description}">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                </form>
-            </div>
-        </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название города</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="city: ${cities}">
+                <td th:text="${city.id}"></td>
+                <td>
+                    <a th:href="@{|/formUpdateCity/${city.id}|}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <span th:text="${city.name}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
