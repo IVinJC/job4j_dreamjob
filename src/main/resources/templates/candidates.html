@@ -52,7 +52,10 @@
                     <a th:href="@{|/formUpdateCandidate/${candidate.id}|}">
                         <i class="fa fa-edit"></i>
                     </a>
+                <td>
+                    <img th:width="100" th:high="100" th:src="@{|/photoCandidate/${candidate.id}|}">
                     <span th:text="${candidate.name}"></span>
+                </td>
                     <span th:if="${candidate.visible}">
             <i class="fa fa-check-square-o"></i>
         </span>

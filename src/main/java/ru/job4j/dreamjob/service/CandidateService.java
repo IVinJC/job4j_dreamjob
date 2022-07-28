@@ -30,4 +30,6 @@ public class CandidateService {
     public Candidate update(Candidate candidate) {
         return store.update(candidate);
     }
+
+
 }
