@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.service.CandidateService;
 
+import javax.annotation.concurrent.ThreadSafe;
 import java.time.LocalDateTime;
-
+@ThreadSafe
 @Controller
 public class CandidateController {
 

@@ -2,11 +2,14 @@ package ru.job4j.dreamjob.persistence;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Candidate;
+
+import javax.annotation.concurrent.ThreadSafe;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+@ThreadSafe
 @Repository
 public class CandidateStore {
 

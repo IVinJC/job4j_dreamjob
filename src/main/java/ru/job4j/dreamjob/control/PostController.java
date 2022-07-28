@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.service.PostService;
 
+import javax.annotation.concurrent.ThreadSafe;
 import java.time.LocalDateTime;
 
+@ThreadSafe
 @Controller
 public class PostController {
     private final PostService postService;

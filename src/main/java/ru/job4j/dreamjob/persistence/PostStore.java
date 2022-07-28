@@ -3,12 +3,13 @@ package ru.job4j.dreamjob.persistence;
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Post;
 
+import javax.annotation.concurrent.ThreadSafe;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
+@ThreadSafe
 @Repository
 public class PostStore {
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
