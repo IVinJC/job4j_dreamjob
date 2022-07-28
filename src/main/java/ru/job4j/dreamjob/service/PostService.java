@@ -7,15 +7,10 @@ import ru.job4j.dreamjob.persistence.PostStore;
 import java.util.Collection;
 @Service
 public class PostService {
-    private static final PostService INST = new PostService();
     private final PostStore store;
 
-    private PostService() {
-        store = PostStore.instOf();
-    }
-
-    public static PostService instOf() {
-        return INST;
+    public PostService(PostStore store) {
+        this.store = store;
     }
 
     public Collection<Post> findAll() {

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Controller
 public class PostController {
-    PostService postService;
+    private final PostService postService;
 
     public PostController(PostService postService) {
         this.postService = postService;
