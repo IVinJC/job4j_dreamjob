@@ -53,6 +53,12 @@
                         <i class="fa fa-edit"></i>
                     </a>
                     <span th:text="${candidate.name}"></span>
+                    <span th:if="${candidate.visible}">
+            <i class="fa fa-check-square-o"></i>
+        </span>
+                    <span th:if="${!candidate.visible}">
+            <i class="fa fa-square-o"></i>
+        </span>
                 </td>
                 <td th:text="${candidate.description}" />
                 <td th:text="${candidate.created}" />
