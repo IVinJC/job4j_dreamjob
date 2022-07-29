@@ -6,17 +6,26 @@ import ru.job4j.dreamjob.persistence.PostDbStore;
 
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.Collection;
+import java.util.List;
 
 @ThreadSafe
 @Service
 public class PostService {
     private final PostDbStore store;
+    private final CityService cityService;
 
-    public PostService(PostDbStore store) {
+    public PostService(PostDbStore store, CityService cityService) {
         this.store = store;
+        this.cityService = cityService;
     }
 
     public Collection<Post> findAll() {
+        List<Post> posts = store.findAll();
+        posts.forEach(
+                post -> post.setCity(
+                        cityService.findById(post.getCity().getId())
+                )
+        );
         return store.findAll();
     }
 
