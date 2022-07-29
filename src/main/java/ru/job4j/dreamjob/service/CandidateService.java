@@ -2,16 +2,16 @@ package ru.job4j.dreamjob.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.model.Candidate;
-import ru.job4j.dreamjob.persistence.CandidateStore;
+import ru.job4j.dreamjob.persistence.CandidateDbStore;
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.Collection;
 
 @ThreadSafe
 @Service
 public class CandidateService {
-    private final CandidateStore store;
+    private final CandidateDbStore store;
 
-    public CandidateService(CandidateStore store) {
+    public CandidateService(CandidateDbStore store) {
         this.store = store;
     }
 
@@ -19,7 +19,7 @@ public class CandidateService {
         return store.findAll();
     }
 
-    public boolean add(Candidate candidate) {
+    public Candidate add(Candidate candidate) {
         return store.add(candidate);
     }
 
@@ -27,9 +27,7 @@ public class CandidateService {
         return store.findById(id);
     }
 
-    public Candidate update(Candidate candidate) {
-        return store.update(candidate);
+    public void update(Candidate candidate) {
+        store.update(candidate);
     }
-
-
 }
