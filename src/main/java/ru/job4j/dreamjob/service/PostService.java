@@ -2,16 +2,17 @@ package ru.job4j.dreamjob.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.model.Post;
-import ru.job4j.dreamjob.persistence.PostStore;
+import ru.job4j.dreamjob.persistence.PostDbStore;
+
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.Collection;
 
 @ThreadSafe
 @Service
 public class PostService {
-    private final PostStore store;
+    private final PostDbStore store;
 
-    public PostService(PostStore store) {
+    public PostService(PostDbStore store) {
         this.store = store;
     }
 
@@ -19,7 +20,7 @@ public class PostService {
         return store.findAll();
     }
 
-    public boolean add(Post post) {
+    public Post add(Post post) {
         return store.add(post);
     }
 
