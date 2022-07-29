@@ -51,7 +51,7 @@ public class PostDbStore {
         return post;
     }
 
-    private void update(Post post) {
+    public void update(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("update post set name = ?")
         ) {
