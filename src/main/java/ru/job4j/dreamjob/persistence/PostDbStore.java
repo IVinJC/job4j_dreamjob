@@ -1,5 +1,6 @@
 package ru.job4j.dreamjob.persistence;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.City;
@@ -8,7 +9,7 @@ import ru.job4j.dreamjob.model.Post;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Repository
 public class PostDbStore {
     private final BasicDataSource pool;
@@ -34,7 +35,7 @@ public class PostDbStore {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("SQLException", e);
         }
         return posts;
     }
@@ -56,7 +57,7 @@ public class PostDbStore {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("SQLException", e);
         }
         return post;
     }
@@ -74,7 +75,7 @@ public class PostDbStore {
             ps.setInt(6, post.getId());
             ps.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("SQLException", e);
         }
         return post;
     }
@@ -95,7 +96,7 @@ public class PostDbStore {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("SQLException", e);
         }
         return null;
     }
