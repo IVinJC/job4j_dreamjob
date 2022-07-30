@@ -9,7 +9,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @ThreadSafe
 @Repository
 public class CandidateDbStore {
@@ -36,7 +36,7 @@ public class CandidateDbStore {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("SQLException", e);
         }
         return candidates;
     }
@@ -59,7 +59,7 @@ public class CandidateDbStore {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("SQLException", e);
         }
         return candidate;
     }
@@ -76,7 +76,7 @@ public class CandidateDbStore {
             ps.setBoolean(5, candidate.isVisible());
             ps.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("SQLException", e);
         }
     }
 
@@ -97,7 +97,7 @@ public class CandidateDbStore {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("SQLException", e);
         }
         return null;
     }

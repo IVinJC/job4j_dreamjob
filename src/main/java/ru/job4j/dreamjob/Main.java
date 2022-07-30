@@ -1,15 +1,17 @@
 package ru.job4j.dreamjob;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.Properties;
-
+@Slf4j
 @SpringBootApplication
 public class Main {
     private Properties loadDbProperties() {
@@ -21,13 +23,13 @@ public class Main {
                 )
         )) {
             cfg.load(io);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            log.error("IOException", e);
         }
         try {
             Class.forName(cfg.getProperty("jdbc.driver"));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            log.error("ClassNotFoundException", e);
         }
         return cfg;
     }
