@@ -22,12 +22,12 @@ public class Main {
         )) {
             cfg.load(io);
         } catch (Exception e) {
-            throw new IllegalStateException(e);
+            e.printStackTrace();
         }
         try {
             Class.forName(cfg.getProperty("jdbc.driver"));
         } catch (Exception e) {
-            throw new IllegalStateException(e);
+            e.printStackTrace();
         }
         return cfg;
     }

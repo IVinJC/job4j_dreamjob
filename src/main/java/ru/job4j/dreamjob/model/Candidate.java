@@ -17,13 +17,25 @@ public class Candidate {
     public Candidate(int id, String name) {
         this.id = id;
         this.name = name;
+        this.created = LocalDateTime.now();
     }
 
-    public Candidate(int id, String name, String description, LocalDateTime created) {
+    public Candidate(int id, String name, String description, byte[] photo, boolean visible) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.created = LocalDateTime.now();
+        this.photo = photo;
+        this.visible = visible;
+    }
+
+    public Candidate(int id, String name, String description, LocalDateTime created, byte[] photo, boolean visible) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
+        this.photo = photo;
+        this.visible = visible;
     }
 
     public int getId() {

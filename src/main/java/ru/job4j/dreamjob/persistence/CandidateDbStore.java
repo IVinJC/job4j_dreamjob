@@ -1,14 +1,12 @@
 package ru.job4j.dreamjob.persistence;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Candidate;
 
 import javax.annotation.concurrent.ThreadSafe;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,6 @@ public class CandidateDbStore {
         this.pool = pool;
     }
 
-
     public List<Candidate> findAll() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
@@ -29,7 +26,13 @@ public class CandidateDbStore {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
+                    candidates.add(new Candidate(
+                            it.getInt("id"),
+                            it.getString("name"),
+                            it.getString("description"),
+                            it.getTimestamp("created").toLocalDateTime(),
+                            it.getBytes("photo"),
+                            it.getBoolean("visible")));
                 }
             }
         } catch (Exception e) {
@@ -40,10 +43,15 @@ public class CandidateDbStore {
 
     public Candidate add(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)",
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name, description, created,"
+                             + "photo, visible) VALUES (?, ?, ?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
+            ps.setString(2, candidate.getDescription());
+            ps.setTimestamp(3, Timestamp.valueOf(candidate.getCreated()));
+            ps.setBytes(4, candidate.getPhoto());
+            ps.setBoolean(5, candidate.isVisible());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -58,12 +66,17 @@ public class CandidateDbStore {
 
     public void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("update candidate set name = ?")
+             PreparedStatement ps = cn.prepareStatement("update candidate set name = ?, description = ?, created = ?,"
+                     + "photo = ?, photo = ?, visible = ? where id = ?")
         ) {
             ps.setString(1, candidate.getName());
+            ps.setString(2, candidate.getDescription());
+            ps.setTimestamp(3, Timestamp.valueOf(candidate.getCreated()));
+            ps.setBytes(4, candidate.getPhoto());
+            ps.setBoolean(5, candidate.isVisible());
             ps.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -74,7 +87,13 @@ public class CandidateDbStore {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return new Candidate(it.getInt("id"), it.getString("name"));
+                    return new Candidate(
+                            it.getInt("id"),
+                            it.getString("name"),
+                            it.getString("description"),
+                            it.getTimestamp("created").toLocalDateTime(),
+                            it.getBytes("photo"),
+                            it.getBoolean("visible"));
                 }
             }
         } catch (Exception e) {
