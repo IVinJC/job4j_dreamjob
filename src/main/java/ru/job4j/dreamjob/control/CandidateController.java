@@ -39,6 +39,7 @@ public class CandidateController {
     @PostMapping("/createCandidate")
     public String createCandidate(@ModelAttribute Candidate candidate,
                                   @RequestParam("file") MultipartFile file) throws IOException {
+        candidate.setCreated(LocalDateTime.now());
         candidate.setPhoto(file.getBytes());
         candidateService.add(candidate);
         return "redirect:/candidates";
