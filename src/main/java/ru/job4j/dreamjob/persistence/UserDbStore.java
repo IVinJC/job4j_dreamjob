@@ -8,8 +8,10 @@ import ru.job4j.dreamjob.model.User;
 import javax.annotation.concurrent.ThreadSafe;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+
 @Slf4j
 @ThreadSafe
 @Repository
@@ -30,5 +32,25 @@ public class UserDbStore {
             log.error("SQLException", e);
         }
         return Optional.of(user);
+    }
+
+    public Optional<User> findUserByEmailAndPwd(String email, String password) {
+        Optional<User> rsl = Optional.empty();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?")
+        ) {
+            ps.setString(1, email);
+            ps.setString(2, password);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    rsl = Optional.of(new User(it.getInt("id"),
+                            it.getString("email"),
+                            it.getString("password")));
+                }
+            }
+        } catch (Exception e) {
+            log.error("Can't find user by id", e);
+        }
+        return rsl;
     }
 }
