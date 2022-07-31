@@ -17,10 +17,8 @@ create table if not exists candidate (
    visible boolean
 );
 
-CREATE TABLE users (
+CREATE TABLE if not exists users (
   id SERIAL PRIMARY KEY,
-  email TEXT,
+  email TEXT UNIQUE,
   password TEXT
 );
-
-ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email)
