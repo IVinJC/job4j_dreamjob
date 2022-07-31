@@ -16,9 +16,3 @@ create table if not exists candidate (
    photo bytea,
    visible boolean
 );
-
-CREATE TABLE if not exists users (
-  id SERIAL PRIMARY KEY,
-  email TEXT UNIQUE,
-  password TEXT
-);
