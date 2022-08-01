@@ -10,6 +10,8 @@ import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.UserService;
 
 import javax.annotation.concurrent.ThreadSafe;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @ThreadSafe
@@ -25,6 +27,18 @@ public class UserController {
     public String formRegistration(Model model) {
         model.addAttribute("user", new User(0, "Заполните поле"));
         return "addUser";
+    }
+
+    @PostMapping ("/fail")
+    public String fail(Model model) {
+        model.addAttribute("fail", "Не верное имя пользователя");
+        return "redirect:/index";
+    }
+
+    @PostMapping ("/success")
+    public String success(Model model) {
+        model.addAttribute("success", "Удачно");
+        return "redirect:/index";
     }
 
     @PostMapping("/registration")
@@ -44,13 +58,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute User user) {
+    public String login(@ModelAttribute User user, HttpServletRequest req) {
         Optional<User> userDb = userService.findUserByEmailAndPwd(
                 user.getEmail(), user.getPassword()
         );
         if (userDb.isEmpty()) {
             return "redirect:/loginPage?fail=true";
         }
+        HttpSession session = req.getSession();
+        session.setAttribute("user", userDb.get());
         return "redirect:/index";
     }
 }

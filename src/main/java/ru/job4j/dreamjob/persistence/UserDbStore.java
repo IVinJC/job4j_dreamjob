@@ -24,9 +24,10 @@ public class UserDbStore {
 
     public Optional<User> add(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO users (email, password) VALUES (?, ?)")) {
-            ps.setString(1, user.getEmail());
-            ps.setString(2, user.getPassword());
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO users (name, email, password) VALUES (?, ?, ?)")) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
             ps.execute();
         } catch (SQLException e) {
             log.error("SQLException", e);
@@ -39,13 +40,15 @@ public class UserDbStore {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?")
         ) {
-            ps.setString(1, email);
-            ps.setString(2, password);
+            ps.setString(2, email);
+            ps.setString(3, password);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    rsl = Optional.of(new User(it.getInt("id"),
+                    User user = new User(it.getInt("id"),
                             it.getString("email"),
-                            it.getString("password")));
+                            it.getString("password"));
+                    user.setName(it.getString("name"));
+                    rsl = Optional.of(user);
                 }
             }
         } catch (Exception e) {
