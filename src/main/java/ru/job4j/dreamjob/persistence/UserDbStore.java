@@ -31,7 +31,7 @@ public class UserDbStore {
         } catch (SQLException e) {
             log.error("SQLException", e);
         }
-        return Optional.of(user);
+        return Optional.ofNullable(user);
     }
 
     public Optional<User> findUserByEmailAndPwd(String email, String password) {
