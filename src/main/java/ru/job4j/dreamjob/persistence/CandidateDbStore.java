@@ -67,13 +67,14 @@ public class CandidateDbStore {
     public void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("update candidate set name = ?, description = ?, created = ?,"
-                     + "photo = ?, photo = ?, visible = ? where id = ?")
+                     + "photo = ?, visible = ? where id = ?")
         ) {
             ps.setString(1, candidate.getName());
             ps.setString(2, candidate.getDescription());
             ps.setTimestamp(3, Timestamp.valueOf(candidate.getCreated()));
             ps.setBytes(4, candidate.getPhoto());
             ps.setBoolean(5, candidate.isVisible());
+            ps.setInt(6, candidate.getId());
             ps.execute();
         } catch (SQLException e) {
             log.error("SQLException", e);
