@@ -23,16 +23,18 @@ public class UserDbStore {
     }
 
     public Optional<User> add(User user) {
+        Optional<User> rsl = Optional.empty();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("INSERT INTO users (name, email, password) VALUES (?, ?, ?)")) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPassword());
             ps.execute();
+            rsl = Optional.of(user);
         } catch (SQLException e) {
             log.error("SQLException", e);
         }
-        return Optional.ofNullable(user);
+        return rsl;
     }
 
     public Optional<User> findUserByEmailAndPwd(String email, String password) {
