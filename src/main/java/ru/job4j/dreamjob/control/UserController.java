@@ -23,19 +23,19 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping ("/formRegistration")
+    @GetMapping("/formRegistration")
     public String formRegistration(Model model) {
         model.addAttribute("user", new User(0, "Заполните поле"));
         return "addUser";
     }
 
-    @PostMapping ("/fail")
+    @PostMapping("/fail")
     public String fail(Model model) {
         model.addAttribute("fail", "Не верное имя пользователя");
-        return "redirect:/index";
+        return "redirect:/loginPage";
     }
 
-    @PostMapping ("/success")
+    @PostMapping("/success")
     public String success(Model model) {
         model.addAttribute("success", "Удачно");
         return "redirect:/index";
@@ -68,5 +68,11 @@ public class UserController {
         HttpSession session = req.getSession();
         session.setAttribute("user", userDb.get());
         return "redirect:/index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/loginPage";
     }
 }
