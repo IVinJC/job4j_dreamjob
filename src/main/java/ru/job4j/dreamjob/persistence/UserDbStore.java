@@ -25,12 +25,18 @@ public class UserDbStore {
     public Optional<User> add(User user) {
         Optional<User> rsl = Optional.empty();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO users (name, email, password) VALUES (?, ?, ?)")) {
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPassword());
             ps.execute();
-            rsl = Optional.of(user);
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getInt(1));
+                    rsl = Optional.of(user);
+                }
+            }
         } catch (SQLException e) {
             log.error("SQLException", e);
         }
