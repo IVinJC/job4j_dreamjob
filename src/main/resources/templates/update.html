@@ -22,36 +22,23 @@
 </head>
 <body>
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Dream Job, <small th:text="${city}"></small></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Главная <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
-                <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
-                <a class="nav-item nav-link" th:href="@{/cities}">Города</a>
-                <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
-                <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
-                <a class="nav-item nav-link" th:href="@{/formAddCity}">Добавить города</a>
-                <a class="nav-item nav-link" th:href="@{/formRegistration}">Регистрация</a>
-            </div>
-        </div>
-    </nav>
     <div class="row pt-3">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Редактирование населенного пункта
+                Редактирование задачи
             </div>
             <div class="card-body">
-                <form th:action="@{/updateCity}" method="POST" th:object="${city}">
+                <form th:action="@{/updatedtask/{id}(id = ${task.id})}" method="POST" th:object="${task}">
                     <input type="hidden" name="id" th:field="*{id}"/>
                     <div class="form-group">
-                        <label for="name">Имя населенного пункта</label>
+                        <label for="name">Название задачи</label>
                         <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
+                    </div>
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Описание: </legend>
+                            <textarea rows="10" cols="45" name="text" class="form-control" th:field="*{description}"></textarea><br>
+                        </fieldset>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

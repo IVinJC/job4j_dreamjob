@@ -27,10 +27,7 @@
         <profile>
             <id>test</id>
             <properties>
-                <db.url>jdbc:h2:${basedir}/testdb;MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;</db.url>
-                <db.username/>
-                <db.password/>
-                <db.driver>org.h2.Driver</db.driver>
+                <liquibase.config>db/liquibase_test.properties</liquibase.config>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -39,10 +36,7 @@
         <profile>
             <id>production</id>
             <properties>
-                <db.url>jdbc:postgresql://127.0.0.1:5432/dreamjob</db.url>
-                <db.username>postgres</db.username>
-                <db.password>password</db.password>
-                <db.driver>org.postgresql.Driver</db.driver>
+                <liquibase.config>db/liquibase.properties</liquibase.config>
             </properties>
         </profile>
     </profiles>
@@ -52,7 +46,7 @@
     <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>4.6.1</version>
+        <version>4.8.0</version>
         <scope>test</scope>
     </dependency>
 
@@ -66,7 +60,7 @@
     <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
-        <version>42.3.6</version>
+        <version>42.4.2</version>
     </dependency>
 
     <dependency>
@@ -213,14 +207,9 @@
         <plugin>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-maven-plugin</artifactId>
-            <version>3.6.2</version>
+            <version>4.15.0</version>
             <configuration>
-                <changeLogFile>${basedir}/db/master.xml</changeLogFile>
-                <url>${db.url}</url>
-                <driver>${db.driver}</driver>
-                <username>${db.username}</username>
-                <password>${db.password}</password>
-                <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                <propertyFile>${liquibase.config}</propertyFile>
             </configuration>
             <executions>
                 <execution>

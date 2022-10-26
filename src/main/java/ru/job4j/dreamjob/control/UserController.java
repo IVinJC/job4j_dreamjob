@@ -1,5 +1,6 @@
 package ru.job4j.dreamjob.control;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @ThreadSafe
+@Slf4j
 @Controller
 public class UserController {
     private final UserService userService;
@@ -23,22 +25,16 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/formRegistration")
-    public String formRegistration(Model model) {
-        model.addAttribute("user", new User(0, "Заполните поле"));
-        return "addUser";
-    }
-
-    @PostMapping("/fail")
-    public String fail(Model model) {
-        model.addAttribute("fail", "Не верное имя пользователя");
-        return "redirect:/loginPage";
-    }
-
-    @PostMapping("/success")
+    @GetMapping("/success")
     public String success(Model model) {
-        model.addAttribute("success", "Удачно");
-        return "redirect:/index";
+        model.addAttribute("success", "Регистрация успешна");
+        return "success";
+    }
+
+    @GetMapping("/fail")
+    public String fail(Model model) {
+        model.addAttribute("message", "Пользователь с такой почтой уже существует");
+        return "fail";
     }
 
     @PostMapping("/registration")
@@ -51,6 +47,11 @@ public class UserController {
         return "redirect:/success";
     }
 
+    @GetMapping("/registration")
+    public String reg(@ModelAttribute("user") User user) {
+        return "registration";
+    }
+
     @GetMapping("/loginPage")
     public String loginPage(Model model, @RequestParam(name = "fail", required = false) Boolean fail) {
         model.addAttribute("fail", fail != null);
@@ -58,14 +59,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute User user, HttpServletRequest req) {
+    public String login(@ModelAttribute User user, HttpServletRequest request) {
         Optional<User> userDb = userService.findUserByEmailAndPwd(
                 user.getEmail(), user.getPassword()
         );
         if (userDb.isEmpty()) {
             return "redirect:/loginPage?fail=true";
         }
-        HttpSession session = req.getSession();
+        HttpSession session = request.getSession();
         session.setAttribute("user", userDb.get());
         return "redirect:/index";
     }

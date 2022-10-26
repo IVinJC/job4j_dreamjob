@@ -16,9 +16,9 @@ public class CityStore {
     private AtomicInteger id = new AtomicInteger(4);
 
     public CityStore() {
-        cities.put(1, new City(1, "Москва"));
-        cities.put(2, new City(2, "СПб"));
-        cities.put(3, new City(3, "Екб"));
+        cities.put(1, new City(1, "Киев"));
+        cities.put(2, new City(2, "Харьков"));
+        cities.put(3, new City(3, "Львов"));
     }
 
     public Collection<City> getAllCities() {

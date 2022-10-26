@@ -38,7 +38,7 @@
                 <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
                 <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
                 <a class="nav-item nav-link" th:href="@{/formAddCity}">Добавить города</a>
-                <a class="nav-item nav-link" th:href="@{/formRegistration}">Регистрация</a>
+                <a class="nav-item nav-link" th:href="@{/registration}">Регистрация</a>
                 <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/loginPage}">
                     <span th:text="${user.name}"></span>
                     <span> | Войти</span>
@@ -54,10 +54,11 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Имя</th>
+                <th scope="col">№</th>
+                <th scope="col">Вакансия</th>
                 <th scope="col">Описание</th>
                 <th scope="col">Создание</th>
+                <th scope="col">Город</th>
             </tr>
             </thead>
             <tbody>
@@ -77,6 +78,7 @@
                 </td>
                 <td th:text="${post.description}"/>
                 <td th:text="${post.created}"/>
+                <td th:text="${post.city.name}"/>
             </tr>
             </tbody>
         </table>

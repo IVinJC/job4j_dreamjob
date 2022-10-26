@@ -6,25 +6,35 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class AuthFilter implements Filter {
+    private final Set<String> mappingURI = ConcurrentHashMap.newKeySet();
+
+    private Boolean uriCheck(String uri) {
+        mappingURI.add("/loginPage");
+        mappingURI.add("/login");
+        mappingURI.add("/registration");
+        return mappingURI.contains(uri);
+    }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String uri = request.getRequestURI();
-        if (uri.endsWith("loginPage") || uri.endsWith("login") || uri.endsWith("registration")
-                || uri.endsWith("formRegistration")) {
-            filterChain.doFilter(request, response);
+    public void doFilter(
+            ServletRequest request,
+            ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+        if (uriCheck(req.getRequestURI())) {
+            chain.doFilter(req, res);
             return;
         }
-        if (request.getSession().getAttribute("user") == null) {
-            response.sendRedirect(request.getContextPath() + "/loginPage");
+        if (req.getSession().getAttribute("user") == null) {
+            res.sendRedirect(req.getContextPath() + "/loginPage");
             return;
         }
-        filterChain.doFilter(request, response);
+        chain.doFilter(req, res);
     }
 }

@@ -25,11 +25,11 @@
                 Новый населенный пункт
             </div>
             <div class="card-body">
-                <form th:action="@{/createСity}" method="POST">
+                <form th:action="@{/createCity}" method="POST" th:object="${city}">
+                    <input type="hidden" name="id" th:field="*{id}"/>
                     <div class="form-group">
-                        <label>Имя
-                            <input type="text" class="form-control" name="name" id="name">
-                        </label>
+                        <label for="name">Название города</label>
+                        <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

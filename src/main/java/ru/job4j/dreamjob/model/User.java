@@ -3,7 +3,6 @@ package ru.job4j.dreamjob.model;
 import java.util.Objects;
 
 public class User {
-
     private int id;
     private String name;
     private String email;
@@ -11,7 +10,6 @@ public class User {
 
     public User() {
     }
-
     public User(int id, String email) {
         this.id = id;
         this.email = email;

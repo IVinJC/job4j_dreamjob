@@ -24,19 +24,18 @@ public class CityController {
     }
 
     @GetMapping("/formAddCity")
-    public String addCity(Model model) {
-        model.addAttribute("city", new City(0, "Заполните поле"));
+    public String addCity(@ModelAttribute("city") City city) {
         return "addCity";
     }
 
     @PostMapping("/createCity")
-    public String createCity(@ModelAttribute City city) {
+    public String create(@ModelAttribute("city") City city) {
         cityService.add(city);
         return "redirect:/cities";
     }
 
     @PostMapping("/updateCity")
-    public String updateCity(@ModelAttribute City city) {
+    public String updateCity(@ModelAttribute("city") City city) {
         cityService.update(city);
         return "redirect:/cities";
     }

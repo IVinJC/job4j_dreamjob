@@ -48,8 +48,8 @@ public class UserDbStore {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?")
         ) {
-            ps.setString(2, email);
-            ps.setString(3, password);
+            ps.setString(1, email);
+            ps.setString(2, password);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
                     User user = new User(it.getInt("id"),

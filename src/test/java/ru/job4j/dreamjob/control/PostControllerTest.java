@@ -7,14 +7,13 @@ import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.service.CityService;
 import ru.job4j.dreamjob.service.PostService;
 
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PostControllerTest {
     @Test
@@ -31,7 +30,8 @@ public class PostControllerTest {
                 postService,
                 cityService
         );
-        String page = postController.posts(model);
+        HttpSession session = mock(HttpSession.class);
+        String page = postController.posts(model, session);
         verify(model).addAttribute("posts", posts);
         assertThat(page, is("posts"));
     }

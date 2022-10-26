@@ -7,7 +7,6 @@ create table if not exists post (
    city_id int
 );
 
-
 create table if not exists candidate (
    id serial primary key,
    name TEXT,

@@ -10,11 +10,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 
     <title>Работа мечты!</title>
 </head>
@@ -22,7 +25,8 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Работа мечты</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -34,7 +38,7 @@
                 <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
                 <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
                 <a class="nav-item nav-link" th:href="@{/formAddCity}">Добавить города</a>
-                <a class="nav-item nav-link" th:href="@{/formRegistration}">Регистрация</a>
+                <a class="nav-item nav-link" th:href="@{/registration}">Регистрация</a>
                 <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/loginPage}">
                     <span th:text="${user.name}"></span>
                     <span> | Войти</span>
@@ -47,10 +51,12 @@
         </div>
     </nav>
     <div class="row">
+        <h2 class="display-4">Кандидаты</h2>
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">№</th>
+                <th scope="col">Фото</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Описание</th>
                 <th scope="col">Создание</th>
@@ -60,22 +66,23 @@
             <tr th:each="candidate: ${candidates}">
                 <td th:text="${candidate.id}"></td>
                 <td>
+                    <img th:width="100" th:high="100" th:src="@{|/photoCandidate/${candidate.id}|}">
+                </td>
+                <td>
                     <a th:href="@{|/formUpdateCandidate/${candidate.id}|}">
                         <i class="fa fa-edit"></i>
                     </a>
-                <td>
-                    <img th:width="100" th:high="100" th:src="@{|/photoCandidate/${candidate.id}|}">
-                    <span th:text="${candidate.name}"></span>
+                    <span th:text="${candidate.getName()}"></span>
                 </td>
-                    <span th:if="${candidate.visible}">
+                <span th:if="${candidate.visible}">
             <i class="fa fa-check-square-o"></i>
         </span>
-                    <span th:if="${!candidate.visible}">
+                <span th:if="${!candidate.visible}">
             <i class="fa fa-square-o"></i>
         </span>
                 </td>
-                <td th:text="${candidate.description}" />
-                <td th:text="${candidate.created}" />
+                <td th:text="${candidate.description}"/>
+                <td th:text="${candidate.created}"/>
             </tr>
             </tbody>
         </table>
