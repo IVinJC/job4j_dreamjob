@@ -22,6 +22,7 @@ OR using default properties(db=dreamjob, user=postgres, password=password, port=
 ```shell
 mvn spring-boot:run
 ```
+3. Go to http://localhost:8080/index
 
 ### TODO list
 The program can:
